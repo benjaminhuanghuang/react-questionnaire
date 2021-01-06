@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { Checkbox, IconButton } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import RedoIcon from "@material-ui/icons/Redo";
@@ -13,11 +13,14 @@ import PeopleIcon from "@material-ui/icons/People";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 //
 import { db } from "../firebase";
-
 import "./Dashboard.css";
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { sendPasswordResetEmail, setError, setSuccess } from "../redux/authActions";
 //
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
+import Message from "../components/Message";
 import PublicRoute from "../components/PublicRoute";
 import PrivateRoute from "../components/PrivateRoute";
 import Question from "./Question";
@@ -41,17 +44,18 @@ function Dashboard() {
   }, []);
 
   return (
-    <div className="dashboard">
-      <Header />
-      {needVerification && <Message type="success" msg="Please verify your email address." />}
-      <div className="dashborad__body">
-        <Sidebar />
-        <Switch>
-          <PrivateRoute path="/question" component={Question} exact />
-        </Switch>
+    <Router>
+      <div className="dashboard">
+        <Header />
+        {needVerification && <Message type="success" msg="Please verify your email address." />}
+        <div className="dashborad__body">
+          <Sidebar />
+          <Switch>
+            <PrivateRoute path="/question" component={Question} exact />
+          </Switch>
+        </div>
       </div>
-      ={" "}
-    </div>
+    </Router>
   );
 }
 
