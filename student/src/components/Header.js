@@ -6,11 +6,9 @@ import SearchIcon from "@material-ui/icons/Search";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import AppsIcon from "@material-ui/icons/Apps";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { auth } from "../firebase";
-
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { signin, setError,signout } from '../redux/authActions';
+import { signout } from '../redux/authActions';
 //
 import "./Header.css";
 

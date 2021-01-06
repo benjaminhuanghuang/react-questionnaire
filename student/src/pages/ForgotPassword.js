@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
@@ -6,22 +6,31 @@ import { useForm } from "react-hook-form";
 import { db } from "../firebase";
 import firebase from "firebase";
 // Redux
-import { useDispatch } from "react-redux";
-import { selectUser, login } from "../redux/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { sendPasswordResetEmail, setError, setSuccess } from "../redux/authActions";
 
 import "./ForgotPassword.css";
 
 function ForgotPassword() {
   const { register, handleSubmit, watch, errors } = useForm();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const { error, success } = useSelector((state) => state.auth);
+  useEffect(() => {
+    return () => {
+      if (error) {
+        dispatch(setError(""));
+      }
+      if (success) {
+        dispatch(setSuccess(""));
+      }
+    };
+  }, [error, dispatch, success]);
 
-  const onSubmit = (formData) => {
-    db.collection("email").add({
-      to: formData.to,
-      subject: formData.subject,
-      message: formData.message,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    });
+  const onSubmit = async (formData) => {
+    setLoading(true);
+    await dispatch(sendPasswordResetEmail(formData.email, "Email sent!"));
+    setLoading(false);
   };
 
   return (

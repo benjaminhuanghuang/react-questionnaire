@@ -25,7 +25,7 @@ function App() {
    // Check if user exists
    useEffect(() => {
     dispatch(setLoading(true));
-    const unsubscribe = auth().onAuthStateChanged(async (user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if(user) {
         dispatch(setLoading(true));
         await dispatch(getUserById(user.uid));
