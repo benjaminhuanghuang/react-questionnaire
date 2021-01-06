@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { sendPasswordResetEmail, setError, setSuccess } from "../redux/authActions";
 
 import Question from "./Question";
+import Sidebar from "../components/Sidebar";
 
 function Dashboard() {
   const [questions, setQuestions] = useState([]);
@@ -30,7 +31,7 @@ function Dashboard() {
     <div className="dashboard">
       <div className="dashborad__body">
         {needVerification && <Alert severity="warning">Please verify your email address</Alert>}
-        Dashboard
+        <Sidebar/>
       </div>
     </div>
   );

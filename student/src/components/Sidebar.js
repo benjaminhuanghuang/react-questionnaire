@@ -1,23 +1,23 @@
 import React from "react";
-import InboxIcon from "@material-ui/icons/Inbox";
 import StarIcon from "@material-ui/icons/Star";
 //
 import SidebarOption from "./SidebarOption";
-
-// Redux
-import { useDispatch } from "react-redux";
-//
+import useFireStore from "../hooks/useFirestore";
 import "./Sidebar.css";
 
 function Sidebar() {
-  const dispatch = useDispatch();
-
+  const {docs} = useFireStore('questions', "name")
+  
   return (
     <div className="sidebar">
-      <SidebarOption Icon={InboxIcon} title="Inbox" number={54} selected />
-      <SidebarOption Icon={StarIcon} title="Started" number={54} />
-     
-    </div>
+      {
+        docs.map((questionset)=>{
+          return (
+            <SidebarOption key={questionset.id} Icon={StarIcon} title={questionset.name} number={54} />
+          )
+        })
+      }
+   </div>
   );
 }
 

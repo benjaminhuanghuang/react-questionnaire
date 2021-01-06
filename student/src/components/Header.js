@@ -46,7 +46,7 @@ function Header() {
             <Button onClick={() => history.push("/login")}>Log In</Button>
           </div>
         ) : (
-          <Button onClick={signOut}>Sign Outr</Button>
+          <Button onClick={signOut}>Sign Out</Button>
         )}
       </div>
     </div>
