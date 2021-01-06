@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { useForm } from "react-hook-form";
-import Message from "../components/Message"
+import Alert from '@material-ui/lab/Alert';
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { signin, setError } from "../redux/authActions";
@@ -38,7 +38,7 @@ function Login() {
           <h3>Login</h3>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {error && <Message type="danger" msg={error} />}
+          {error && <Alert severity="warning">{error}</Alert>}
           <input name="email" type="email" placeholder="Email:" ref={register({ required: true })} />
           {errors.to && <p className="signup__error">Name is required</p>}
           <input name="password" type="password" placeholder="Password:" ref={register({ required: true })} />

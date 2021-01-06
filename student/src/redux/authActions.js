@@ -17,7 +17,7 @@ export const signup = (data, onError) => {
       if (res.user) {
         const userData = {
           email: data.email,
-          firstName: data.firstName,
+          dispalyName: data.name,
           id: res.user.uid,
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         };
@@ -74,11 +74,24 @@ export const setLoading = (value) => {
 export const signin = (data, onError) => {
   return async (dispatch) => {
     try {
-      await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
+      const res = await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
+      if (res.user) {
+        const userData = {
+          email: res.user.email,
+          displayName: res.user.displayName,
+          id: res.user.uid,
+        };
+        dispatch({
+          type: SET_USER,
+          payload: userData,
+        });
+      }
+      dispatch(setLoading(false));
     } catch (err) {
       console.log(err);
-      onError();
+      onError&&onError();
       dispatch(setError(err.message));
+      dispatch(setLoading(false));
     }
   };
 };

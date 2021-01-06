@@ -3,8 +3,6 @@ import { useHistory, Link } from "react-router-dom";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Button } from "@material-ui/core";
 import { IconButton, Avatar } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import AppsIcon from "@material-ui/icons/Apps";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 // Redux
@@ -17,7 +15,6 @@ function Header() {
   const history = useHistory();
   const dispatch = useDispatch();
   const { authenticated } = useSelector((state) => state.auth);
-
   const signOut = () => {
     dispatch(signout());
   };
@@ -49,7 +46,7 @@ function Header() {
             <Button onClick={() => history.push("/login")}>Log In</Button>
           </div>
         ) : (
-          <Button text="Sign out" onClick={signOut} />
+          <Button onClick={signOut}>Sign Outr</Button>
         )}
       </div>
     </div>

@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
 import { useForm } from "react-hook-form";
-import { db } from "../firebase";
-import firebase from "firebase";
+import Alert from "@material-ui/lab/Alert";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { sendPasswordResetEmail, setError, setSuccess } from "../redux/authActions";
@@ -40,11 +38,13 @@ function ForgotPassword() {
           <h3>Reset Password</h3>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
+          {error && <Alert severity="warning">{error}</Alert>}
+          {success && <Alert type="success">{success}</Alert>}
           <input name="email" type="email" placeholder="Email:" ref={register({ required: true })} />
           {errors.to && <p className="usename__error">Name is required</p>}
           <div className="singup__options">
-            <Button className="signup__submit" variant="contained" color="primary" type="submit">
-              Reset password
+            <Button className="signup__submit" variant="contained" color="primary" type="submit" disabled={loading}>
+              {loading ? "Loading..." : "Send password reset email"}
             </Button>
           </div>
         </form>

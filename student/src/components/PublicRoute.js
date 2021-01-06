@@ -5,8 +5,14 @@ import { useSelector } from "react-redux";
 
 const PublicRoute = ({ component: Component, ...rest }) => {
   const { authenticated } = useSelector((state) => state.auth);
-
-  return <Route {...rest} render={(props) => (!authenticated ? <Component {...props} /> : <Redirect to="/dashboard" />)} />;
+  return (
+    <Route
+      {...rest}
+      render={(props) => {
+        return !authenticated ? <Component {...props} /> : <Redirect to="/dashboard" />;
+      }}
+    ></Route>
+  );
 };
 
 export default PublicRoute;
