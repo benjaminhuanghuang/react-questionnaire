@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Checkbox, IconButton } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import RedoIcon from "@material-ui/icons/Redo";
@@ -14,8 +15,14 @@ import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import { db } from "../firebase";
 
 import "./Dashboard.css";
+//
+import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
+import PublicRoute from "../components/PublicRoute";
+import PrivateRoute from "../components/PrivateRoute";
+import Question from "./Question";
 
-function MailList() {
+function Dashboard() {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
@@ -32,10 +39,17 @@ function MailList() {
   }, []);
 
   return (
-    <div className="dashboarod">
-      Dashboard
+    <div className="dashboard">
+      <Header />
+      <div className="dashborad__body">
+        <Sidebar />
+        <Switch>
+          <PrivateRoute path="/question" component={Question} exact />
+        </Switch>
+      </div>
+      ={" "}
     </div>
   );
 }
 
-export default MailList;
+export default Dashboard;

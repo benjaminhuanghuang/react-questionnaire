@@ -6,7 +6,7 @@ import {db} from '../firebase'
 import firebase from 'firebase'
 // Redux
 import { useDispatch } from "react-redux";
-import { selectUser, login } from "./redux/userSlice";
+import { selectUser, login } from "../redux/userSlice";
 
 
 import "./Signup.css";

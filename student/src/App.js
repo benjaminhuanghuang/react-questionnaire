@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 //
-import Header from "./components/Header";
-import Sidebar from "./components/Sidebar";
+
+import PublicRoute from "./components/PublicRoute";
+import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import Question from "./pages/Question";
 import { auth } from "./firebase";
 
@@ -29,30 +31,17 @@ function App() {
         );
       } else {
         dispatch(logout());
-      }  
+      }
     });
   }, []);
 
   return (
     <Router>
-      {!user ? (
-        <Login />
-      ) : (
-        <div className="app">
-          <Header />
-          <div className="app__body">
-            <Sidebar />
-            <Switch>
-              <Route path="/" exact>
-                <Dashboard />
-              </Route>
-              <Route path="/question">
-                <Question />
-              </Route>
-            </Switch>
-          </div>
-        </div>
-      )}
+      <Switch>
+        <PrivateRoute path="/" component={Dashboard} exact />
+        <PublicRoute path="/signup" component={Signup} exact />
+        <PublicRoute path="/login" component={Login} exact />
+      </Switch>
     </Router>
   );
 }
