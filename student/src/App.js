@@ -8,6 +8,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import ForgotPassword from "./pages/ForgotPassword";
 import Question from "./pages/Question";
 import { auth } from "./firebase";
 
@@ -41,6 +42,7 @@ function App() {
         <PrivateRoute path="/" component={Dashboard} exact />
         <PublicRoute path="/signup" component={Signup} exact />
         <PublicRoute path="/login" component={Login} exact />
+        <PublicRoute path="/forgot-password" component={ForgotPassword} exact />
       </Switch>
     </Router>
   );

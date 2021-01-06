@@ -9,11 +9,12 @@ import firebase from "firebase";
 import { useDispatch } from "react-redux";
 import { selectUser, login } from "../redux/userSlice";
 
-import "./Login.css";
+import "./ForgotPassword.css";
 
-function Login() {
+function ForgotPassword() {
   const { register, handleSubmit, watch, errors } = useForm();
   const dispatch = useDispatch();
+
   const onSubmit = (formData) => {
     db.collection("email").add({
       to: formData.to,
@@ -24,31 +25,26 @@ function Login() {
   };
 
   return (
-    <div className="login">
-      <div className="login__container">
-        <div className="login__header">
-          <h3>Login</h3>
+    <div className="forgotPassword">
+      <div className="forgotPassword__container">
+        <div className="forgotPassword__header">
+          <h3>Reset Password</h3>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <input name="email" type="email" placeholder="Email:" ref={register({ required: true })} />
-          {errors.to && <p className="signup__error">Name is required</p>}
-          <input name="password" type="password" placeholder="Password:" ref={register({ required: true })} />
-          {errors.subject && <p className="signup__error">Password is required</p>}
-          <div className="login__options">
-            <Button className="login__submit" variant="contained" color="primary" type="submit">
-              Login
+          {errors.to && <p className="usename__error">Name is required</p>}
+          <div className="singup__options">
+            <Button className="signup__submit" variant="contained" color="primary" type="submit">
+              Reset password
             </Button>
           </div>
         </form>
         <div className="signup__link">
-          Do not have account? <Link to="/signup">Signup</Link>
-        </div>
-        <div className="signup__link">
-          Forget password? <Link to="/forgot-password">Reset Passowd</Link>
+          <Link to="/login">login</Link>
         </div>
       </div>
     </div>
   );
 }
 
-export default Login;
+export default ForgotPassword;

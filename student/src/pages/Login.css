@@ -9,6 +9,7 @@
 .login__container{
   display: flex;
   flex-direction: column;
+  width: 400px;
 }
 
 .login__container > img {
@@ -41,4 +42,8 @@
   border: none;
   border-bottom: 1px solid whitesmoke;
   outline: none;
+}
+
+.signup__link {
+  padding-top: 5px;
 }
