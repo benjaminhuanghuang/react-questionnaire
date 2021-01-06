@@ -24,6 +24,8 @@ import Question from "./Question";
 
 function Dashboard() {
   const [questions, setQuestions] = useState([]);
+  const { user, needVerification, success } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     db.collection("email")
@@ -41,6 +43,7 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <Header />
+      {needVerification && <Message type="success" msg="Please verify your email address." />}
       <div className="dashborad__body">
         <Sidebar />
         <Switch>
