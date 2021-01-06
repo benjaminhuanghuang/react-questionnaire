@@ -12,36 +12,15 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
-import { auth } from "./firebase";
-
+import useAuthListener from './hooks/useAuthListener';
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { getUserById, setLoading, setNeedVerification } from "./redux/authActions";
 
 function App() {
+  useAuthListener();
   const { loading } = useSelector((state) => state.auth);
-
-  const dispatch = useDispatch();
-
-  // Check if user exists
-  useEffect(() => {
-    dispatch(setLoading(true));
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        dispatch(setLoading(true));
-        await dispatch(getUserById(user.uid));
-        if (!user.emailVerified) {
-          dispatch(setNeedVerification());
-        }
-      }
-      dispatch(setLoading(false));
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, [dispatch]);
-
+  
   if (loading) {
     return <Loader />;
   }

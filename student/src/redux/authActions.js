@@ -42,6 +42,15 @@ export const signup = (data, onError) => {
   };
 };
 
+export const setUser = (user) => {
+  return (dispatch) => {
+    dispatch({
+      type: SET_USER,
+      payload: user,
+    });
+  };
+};
+
 // Get user by id
 export const getUserById = (id) => {
   return async (dispatch) => {
