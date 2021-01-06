@@ -1,19 +1,31 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
 import { useForm } from "react-hook-form";
 import { db } from "../firebase";
 import firebase from "firebase";
 // Redux
-import { useDispatch } from "react-redux";
-import { selectUser, login } from "../redux/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { signin, setError } from '../redux/authActions';
 
 import "./Signup.css";
 
 function Signup() {
   const { register, handleSubmit, watch, errors } = useForm();
   const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { error } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    return () => {
+      if(error) {
+        dispatch(setError(''));
+      }
+    }
+  }, [error, dispatch]);
+
 
   const onSubmit = (formData) => {
     db.collection("email").add({

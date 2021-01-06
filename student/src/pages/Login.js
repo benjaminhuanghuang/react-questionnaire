@@ -1,27 +1,37 @@
-import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
 import { useForm } from "react-hook-form";
-import { db } from "../firebase";
-import firebase from "firebase";
 // Redux
-import { useDispatch } from "react-redux";
-import { selectUser, login } from "../redux/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { signin, setError } from '../redux/authActions';
 
 import "./Login.css";
 
 function Login() {
   const { register, handleSubmit, watch, errors } = useForm();
   const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { error } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    return () => {
+      if(error) {
+        dispatch(setError(''));
+      }
+    }
+  }, [error, dispatch]);
+
+
   const onSubmit = (formData) => {
-    db.collection("email").add({
-      to: formData.to,
-      subject: formData.subject,
-      message: formData.message,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    });
-  };
+    if(error) {
+      dispatch(setError(''));
+    }
+    setLoading(true);
+    dispatch(signin(formData, () => setLoading(false)));
+  }
 
   return (
     <div className="login">
@@ -38,6 +48,7 @@ function Login() {
             <Button className="login__submit" variant="contained" color="primary" type="submit">
               Login
             </Button>
+            <Button text={loading ? "Loading..." : "Log In"} className="login__submit" variant="contained" color="primary" type="submit" disabled={loading} />
           </div>
         </form>
         <div className="signup__link">

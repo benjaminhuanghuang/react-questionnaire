@@ -5,36 +5,45 @@ import { BrowserRouter as Router, Switch } from "react-router-dom";
 
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
+import Loader from "./components/Loader";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
-import Question from "./pages/Question";
 import { auth } from "./firebase";
 
 // Redux
 import { useSelector, useDispatch } from "react-redux";
-import { selectUser, login, logout } from "./redux/userSlice";
+import { getUserById, setLoading, setNeedVerification } from './redux/authActions';
+
 
 function App() {
-  const user = useSelector(selectUser);
+  const { loading } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        dispatch(
-          login({
-            displayName: user.displayName,
-            email: user.email,
-            photoUrl: user.photoURL,
-          })
-        );
-      } else {
-        dispatch(logout());
+   // Check if user exists
+   useEffect(() => {
+    dispatch(setLoading(true));
+    const unsubscribe = auth().onAuthStateChanged(async (user) => {
+      if(user) {
+        dispatch(setLoading(true));
+        await dispatch(getUserById(user.uid));
+        if(!user.emailVerified) {
+          dispatch(setNeedVerification());
+        }
       }
+      dispatch(setLoading(false));
     });
-  }, []);
+
+    return () => {
+      unsubscribe();
+    };
+  }, [dispatch]);
+
+  if(loading) {
+    return <Loader />;
+  }
 
   return (
     <Router>
