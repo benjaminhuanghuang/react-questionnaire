@@ -10,7 +10,7 @@ function Sidebar({ questions, currentQuestionId, onSelect }) {
   };
 
   if (questions.length === 0) {
-    renderNoData();
+    return renderNoData();
   }
   return (
     <div className="sidebar">

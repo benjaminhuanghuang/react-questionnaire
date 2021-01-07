@@ -9,6 +9,7 @@ import { fetchQuestions, selectQuestion } from "../redux/questionActions";
 
 import Sidebar from "../components/Sidebar";
 import Loader from "../components/Loader";
+import QuestionForm from "../components/QuestionForm";
 
 function Dashboard() {
   const { questions, isQuestionsLoading, questionsError, currentQuestionId } = useSelector((state) => state.question);
@@ -34,6 +35,7 @@ function Dashboard() {
         {needVerification && <Alert severity="warning">Please verify your email address</Alert>}
         {questionsError && <Alert severity="error">{questionsError}</Alert>}
         <Sidebar questions={questions} currentQuestionId={currentQuestionId}  onSelect={handleSelect} />
+        <QuestionForm/>
       </div>
     </div>
   );

@@ -22,21 +22,17 @@ function QuestionForm() {
 
   if (questions.length === 0)
   {
-    renderNoData();
-    return;
-    
+    return renderNoData();    
   }
   const currentQuestion = questions.find((q) => q.id === currentQuestionId);
 
   if (currentQuestion === null)
   {
-    renderNoData();
-    return;
-    
+    return renderNoData();    
   }
 
   return (
-    <div>
+    <div className="questionForm">
       return <div>{JSON.stringify(currentQuestion)}</div>;
     </div>
   )
