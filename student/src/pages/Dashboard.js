@@ -1,4 +1,4 @@
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import Alert from "@material-ui/lab/Alert";
 
 //
@@ -17,10 +17,9 @@ function Dashboard() {
 
   const dispatch = useDispatch();
 
-  const handleSelect = (id)  =>
-  { 
+  const handleSelect = (id) => {
     dispatch(selectQuestion(id));
-  }
+  };
 
   useEffect(() => {
     dispatch(fetchQuestions());
@@ -31,11 +30,12 @@ function Dashboard() {
   }
   return (
     <div className="dashboard">
+      {needVerification && <Alert severity="warning">Please verify your email address</Alert>}
+      {questionsError && <Alert severity="error">{questionsError}</Alert>}
+
       <div className="dashborad__body">
-        {needVerification && <Alert severity="warning">Please verify your email address</Alert>}
-        {questionsError && <Alert severity="error">{questionsError}</Alert>}
-        <Sidebar questions={questions} currentQuestionId={currentQuestionId}  onSelect={handleSelect} />
-        <QuestionForm/>
+        <Sidebar questions={questions} currentQuestionId={currentQuestionId} onSelect={handleSelect} />
+        <QuestionForm />
       </div>
     </div>
   );
