@@ -1,4 +1,18 @@
 .questionForm {
-  flex: 1;
+  flex: 0.75;
   overflow: scroll;
+  display: flex;
+  flex-direction: column;
+}
+
+.questionForm_questionWrapper{
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.questionForm__answer{
+  height: 130px;
+  padding: 10px;
 }

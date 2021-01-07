@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 //
-import "./QuesitonForm.css"
-import Loader from "./Loader"
+import "./QuesitonForm.css";
+import Loader from "./Loader";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -9,42 +9,36 @@ import { fecthQuestions } from "../redux/questionActions";
 
 function QuestionForm() {
   const { questions, isQuestionsLoading, questionsError, currentQuestionId } = useSelector((state) => state.question);
-  
-  const renderNoData = () =>{
-    return (
-      <h2>No data</h2>
-    )
-  }
+
+  const renderNoData = () => {
+    return <h2>No data</h2>;
+  };
 
   if (isQuestionsLoading) {
     return <Loader />;
   }
 
-  if (questions.length === 0)
-  {
-    return renderNoData();    
+  if (questions.length === 0) {
+    return renderNoData();
   }
   const currentQuestion = questions.find((q) => q.id === currentQuestionId);
-  
-  if (currentQuestion === null)
-  {
-    return renderNoData();    
+
+  if (currentQuestion === null) {
+    return renderNoData();
   }
   return (
     <div className="questionForm">
-      {
-        currentQuestion.data.question_set.map((qItem)=>{
-          return (<>
-          <div>
+      {currentQuestion.data.question_set.map((qItem) => {
+        return (
+          <div className="questionForm_questionWrapper">
             {qItem.question}
+
+            <textarea className="questionForm__answer"></textarea>
           </div>
-          <input >
-          </input>
-          </>)
-        })
-      }
+        );
+      })}
     </div>
-  )
+  );
 }
 
-export default QuestionForm
+export default QuestionForm;
