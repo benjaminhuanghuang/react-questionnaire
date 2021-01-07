@@ -10,10 +10,6 @@ import { db } from "../firebase";
 export const fetchQuestions = (query) => {
   return async (dispatch) => {
     try {
-      dispatch({
-        type: SET_FETCH_QUESTIONS_LOADING,
-        payload: true,
-      });
       db.collection("questions")
         .orderBy("name", "desc")
         .onSnapshot((snapshot) => {
@@ -34,10 +30,6 @@ export const fetchQuestions = (query) => {
               payload: firstId,
             });
           }
-          dispatch({
-            type: SET_FETCH_QUESTIONS_LOADING,
-            payload: false,
-          });
         });
     } catch (err) {
       dispatch({

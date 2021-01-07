@@ -25,15 +25,24 @@ function QuestionForm() {
     return renderNoData();    
   }
   const currentQuestion = questions.find((q) => q.id === currentQuestionId);
-
+  
   if (currentQuestion === null)
   {
     return renderNoData();    
   }
-
   return (
     <div className="questionForm">
-      return <div>{JSON.stringify(currentQuestion)}</div>;
+      {
+        currentQuestion.data.question_set.map((qItem)=>{
+          return (<>
+          <div>
+            {qItem.question}
+          </div>
+          <input >
+          </input>
+          </>)
+        })
+      }
     </div>
   )
 }

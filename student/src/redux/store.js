@@ -4,10 +4,12 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import authReducer from './authReducer';
 import questionReducer from './questionReducer';
+import answerReducer from './answerReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  question: questionReducer
+  question: questionReducer,
+  answer: answerReducer
 });
 
 const store = createStore(
