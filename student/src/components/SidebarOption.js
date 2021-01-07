@@ -1,15 +1,20 @@
-import React from 'react'
+import React from "react";
 //
-import './SidebarOption.css'
+import "./SidebarOption.css";
 
-function SidebarOption({Icon, title, number, selected}) {
+function SidebarOption({ questionId, Icon, title, selected, handleClick }) {
   return (
-    <div className={`sidebarOption ${selected && 'sidebarOption--active'}`}>
-      <Icon/>
+    <div
+      className={`sidebarOption ${selected && "sidebarOption--active"}`}
+      onClick={() => {
+        handleClick(questionId);
+      }}
+    >
+      <Icon />
       <h3>{title}</h3>
       {/* <p>{number}</p> */}
     </div>
-  )
+  );
 }
 
-export default SidebarOption
+export default SidebarOption;

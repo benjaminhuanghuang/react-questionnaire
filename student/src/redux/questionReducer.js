@@ -1,31 +1,43 @@
-import { GET_QUESTIONS, GET_USER_ANSWERS, SUBMIT_ANSWER } from './consts';
+import {
+  SET_QUESTIONS,
+  SET_FETCH_QUESTIONS_LOADING,
+  SET_FETCH_QUESTIONS_ERROR,
+  SET_CURRENT_QUESTION_ID,
+} from "./consts";
 
 const initialState = {
   questions: [],
-  quesitonsLoaded: false,
-  userAnswers: [],
-  userAnswersLoaded: false,
-  currentQuestionId: ""
-}
+  currentQuestionId: null,
+  isQuestionsLoading: false,
+  questionsError: "",
+};
 
 const questionReducer = (state = initialState, action) => {
-  switch(action.type) {
-    case GET_QUESTIONS:
+  switch (action.type) {
+    case SET_QUESTIONS:
       return {
         ...state,
         questions: action.payload,
-        quesitonsLoaded: true
-      }
-    case GET_USER_ANSWERS:
+      };
+    case SET_FETCH_QUESTIONS_LOADING:
       return {
         ...state,
-        userAnswers: action.payload,
-        userAnswersLoaded: true
-      }
+        isQuestionsLoading: action.payload,
+      };
+    case SET_FETCH_QUESTIONS_ERROR:
+      return {
+        ...state,
+        questionsError: action.payload,
+      };
+    case SET_CURRENT_QUESTION_ID:
+      return {
+        ...state,
+        currentQuestionId: action.payload,
+      };
 
     default:
       return state;
   }
-}
+};
 
 export default questionReducer;

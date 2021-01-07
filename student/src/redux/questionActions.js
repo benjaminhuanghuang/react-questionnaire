@@ -1,8 +1,13 @@
-import { GET_QUESTIONS, SET_QUESTIONS_LOADING, SET_QUESTIONS_ERROR, GET_USER_ANSWERS, SUBMIT_ANSWER } from "./consts";
-import { db } from "./firebase";
+import {
+  SET_QUESTIONS,
+  SET_FETCH_QUESTIONS_LOADING,
+  SET_FETCH_QUESTIONS_ERROR,
+  SET_CURRENT_QUESTION_ID,
+} from "./consts";
+import { db } from "../firebase";
 
-// Get images
-export const getQuestions = (query) => {
+// Fetch all questions
+export const fetchQuestions = (query) => {
   return async (dispatch) => {
     try {
       db.collection("questions")
@@ -12,33 +17,39 @@ export const getQuestions = (query) => {
             id: doc.id,
             data: doc.data(),
           }));
+          
           dispatch({
-            type: GET_QUESTIONS,
+            type: SET_QUESTIONS,
             payload: questions,
           });
+          if (questions.length > 0)
+          {
+            const firstId = questions[0].id;
+            dispatch({
+              type: SET_CURRENT_QUESTION_ID,
+              payload: firstId,
+            });
+          }
         });
     } catch (err) {
-      console.log(err);
+      dispatch({
+        type: SET_QUESTIONS,
+        payload: SET_FETCH_QUESTIONS_ERROR,
+      });
+      dispatch({
+        type: SET_FETCH_QUESTIONS_LOADING,
+        payload: false,
+      });
     }
   };
 };
 
-// Set loading
-export const setQuestionsLoading = (value) => {
-  return (dispatch) => {
-    dispatch({
-      type: SET_QUESTIONS_LOADING,
-      payload: value,
-    });
-  };
-};
 
-// Set error
-export const setQuesitonsError = (msg) => {
-  return (dispatch) => {
+export const selectQuestion = (id) => {
+  return  (dispatch) => {
     dispatch({
-      type: SET_QUESTIONS_ERROR,
-      payload: msg,
-    });
+      type: SET_CURRENT_QUESTION_ID,
+      payload: id,
+    });   
   };
 };
